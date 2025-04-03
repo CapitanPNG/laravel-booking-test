@@ -1,115 +1,66 @@
-# Laravel Booking Test
+<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
-Questo repository contiene il test tecnico per la selezione di sviluppatori PHP con esperienza in Laravel 11.
+<p align="center">
+<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+</p>
 
-## ✅ Obiettivo
-Realizzare una piccola API REST per la gestione di prenotazioni (Booking System).
+## About Laravel
 
-## 🚀 Funzionalità Richieste
-- CRUD per l'entità `Booking`
-- Associazione con entità `Customer`
-- Validazione degli input con Form Request
-- Middleware di autenticazione (Laravel Sanctum o token semplice)
-- Logging delle operazioni
-- Endpoint per esportazione CSV
+Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
 
-## 🧱 Requisiti Tecnici
-- Laravel 11+
-- PHP 8.3+
-- Service Layer / Action Classes
-- Repository Pattern
-- Design Patterns ove utili (es. Strategy, Factory)
-- Code Linting (PHP-CS-Fixer o Laravel Pint)
-- Analisi statica con PHPStan (livello 5+ consigliato)
-- Testing con PHPUnit
+- [Simple, fast routing engine](https://laravel.com/docs/routing).
+- [Powerful dependency injection container](https://laravel.com/docs/container).
+- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
+- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
+- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
+- [Robust background job processing](https://laravel.com/docs/queues).
+- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
 
-## 🐳 Docker
-Il progetto deve funzionare tramite Docker:
-- PHP + Laravel
-- MySQL o PostgreSQL
-- phpMyAdmin (opzionale)
+Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
-### Esempio `compose.yml`
-```yaml
-version: '3.8'
+## Learning Laravel
 
-services:
-  app:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    image: laravel-app
-    container_name: laravel-app
-    restart: unless-stopped
-    working_dir: /var/www
-    volumes:
-      - .:/var/www
-    ports:
-      - "8000:8000"
-    depends_on:
-      - db
-    networks:
-      - laravel
+Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
 
-  db:
-    image: mysql:8.0
-    container_name: laravel-db
-    restart: unless-stopped
-    environment:
-      MYSQL_DATABASE: laravel
-      MYSQL_USER: user
-      MYSQL_PASSWORD: secret
-      MYSQL_ROOT_PASSWORD: secret
-    ports:
-      - "3306:3306"
-    volumes:
-      - dbdata:/var/lib/mysql
-    networks:
-      - laravel
+You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
 
-volumes:
-  dbdata:
+If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
 
-networks:
-  laravel:
-```
+## Laravel Sponsors
 
-### Esempio `Dockerfile`
-```Dockerfile
-FROM php:8.3-fpm
+We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
 
-# Installazioni base
-RUN apt-get update && apt-get install -y \
-    build-essential \
-    libpng-dev \
-    libjpeg-dev \
-    libonig-dev \
-    libxml2-dev \
-    zip \
-    unzip \
-    git \
-    curl \
-    libzip-dev \
-    && docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd zip
+### Premium Partners
 
-# Composer
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+- **[Vehikl](https://vehikl.com/)**
+- **[Tighten Co.](https://tighten.co)**
+- **[WebReinvent](https://webreinvent.com/)**
+- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
+- **[64 Robots](https://64robots.com)**
+- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
+- **[Cyber-Duck](https://cyber-duck.co.uk)**
+- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
+- **[Jump24](https://jump24.co.uk)**
+- **[Redberry](https://redberry.international/laravel/)**
+- **[Active Logic](https://activelogic.com)**
+- **[byte5](https://byte5.de)**
+- **[OP.GG](https://op.gg)**
 
-WORKDIR /var/www
-```
+## Contributing
 
-## ⌛ Consegna
-- Crea un fork o clone del progetto
-- Crea una nuova branch con il tuo nome (`feature/nome-cognome`)
-- Esegui Commits coerenti e descrittivi
-- Invia il link alla tua repository entro 72h
+Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
 
-## 📎 Extra Opzionali
-- Seeder/Factory
-- Swagger o Postman Collection
-- CI/CD (GitHub Actions)
+## Code of Conduct
 
----
+In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
 
-In bocca al lupo!
+## Security Vulnerabilities
 
+If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+
+## License
+
+The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
