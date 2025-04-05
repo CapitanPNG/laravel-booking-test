@@ -9,7 +9,7 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
+    public function up () : void
     {
         Schema::create('customers', function (Blueprint $table) {
             $table->id();
@@ -22,13 +22,15 @@ return new class extends Migration
             $table->foreignId('customer_id')->constrained('customers')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
             $table->timestamp('booking_timestamp');
+
+            $table->unique( ['customer_id', 'booking_timestamp'], 'customer_booking_unique' );
         });
     }
 
     /**
      * Reverse the migrations.
      */
-    public function down(): void
+    public function down () : void
     {
         Schema::dropIfExists('customers');
         Schema::dropIfExists('bookings');
