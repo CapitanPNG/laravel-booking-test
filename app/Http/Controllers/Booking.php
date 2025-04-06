@@ -39,8 +39,42 @@ class Booking extends Controller
 
     public function list (Request $request)
     {
-        // Returning the value
-        return response()->json( Resource::all() );
+        switch ( $request->query('format') )
+        {
+            case 'csv':
+                // (Setting the values)
+                $column_separator = ';';
+                $line_separator   = "\n";
+
+
+
+                // (Setting the value)
+                $csv_content = '';
+
+                foreach ( Resource::all()->toArray() as $i => $record )
+                {// Processing each entry
+                    if ( $i === 0 )
+                    {// (Line is the first)
+                        // (Setting the value)
+                        $csv_content .= implode( $column_separator, array_keys( $record ) ) . $line_separator;
+                    }
+
+
+
+                    // (Appending the value)
+                    $csv_content .= implode( $column_separator, array_values( $record ) ) . $line_separator;
+                }
+
+
+
+                // Returning the value
+                return response()->stream( function () use ( $csv_content ) { echo $csv_content; }, 200, [ 'Content-Type' => 'text/csv', 'Content-Disposition' => 'attachment; filename="bookings.csv"' ] );
+            break;
+
+            default:
+                // Returning the value
+                return response()->json( Resource::all() );
+        }
     }
 
     public function update (UpdateRequest $request, int $id)
