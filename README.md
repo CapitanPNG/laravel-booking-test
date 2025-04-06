@@ -64,3 +64,11 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+
+
+# README (test)
+1) Digit `sudo docker compose up -d`
+2) Add the following line to '.env' file : `API_TOKEN='{test-token}'`
+3) Digit `php artisan db:seed --class CustomerSeeder`
+4) Digit `vendor/bin/phpunit`

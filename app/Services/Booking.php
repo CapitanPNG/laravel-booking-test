@@ -28,17 +28,17 @@ class Booking
 
 
 
-    public function update (int $customer_id, int $id, array $values) : Response
+    public function update (int $id, array $values) : Response
     {
-        if ( $this->repository->exists( $customer_id, $values['booking_timestamp'] ) )
+        if ( $this->repository->exists( $values['booking_timestamp'] ) )
         {// (Record found)
             // Returning the value
-            return new Response( 409, "Key ['customer_id','booking_timestamp'] already exists (" . __CLASS__ . ')' );
+            return new Response( 409, "Key 'booking_timestamp' already exists (" . __CLASS__ . ')' );
         }
 
 
 
-        if ( !$this->repository->update( $customer_id, $id, $values ) )
+        if ( !$this->repository->update( $id, $values ) )
         {// (Unable to update the record)
             // Returning the value
             return new Response( 500, 'Unable to update the record (' . __CLASS__ . ')' );
@@ -57,9 +57,9 @@ class Booking
 
     public function insert (array $record) : Response
     {
-        if ( $this->repository->exists( $record['customer_id'], $record['booking_timestamp'] ) )
+        if ( $this->repository->exists( $record['booking_timestamp'] ) )
         {// (Record found)
-            return new Response( 409, "Key ['customer_id','booking_timestamp] already exists (" . __CLASS__ . ")" );
+            return new Response( 409, "Key 'booking_timestamp' already exists (" . __CLASS__ . ")" );
         }
 
 
@@ -83,9 +83,9 @@ class Booking
         return new Response( 200, 'OK', $resource->id );
     }
 
-    public function delete (int $customer_id, int $id) : Response
+    public function delete (int $id) : Response
     {
-        if ( !$this->repository->delete( $customer_id, $id ) )
+        if ( !$this->repository->delete( $id ) )
         {// (Unable to delete the record)
             return new Response( 500, 'Unable to delete the record (' . __CLASS__ . ')' );
         }

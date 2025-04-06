@@ -24,15 +24,15 @@ class Booking
 
 
 
-    public function exists (int $customer_id, string $booking_timestamp) : bool
+    public function exists (string $booking_timestamp) : bool
     {
         // (Returning the value)
-        return $this->resource->where( [ [ 'customer_id', $customer_id ], [ 'booking_timestamp', $booking_timestamp ] ] )->exists();
+        return $this->resource->where( 'booking_timestamp', $booking_timestamp )->exists();
     }
 
-    public function update (int $customer_id, int $id, array $values) : bool
+    public function update (int $id, array $values) : bool
     {
-        if ( !Resource::where( [ [ 'customer_id', $customer_id ], [ 'id', $id ] ] )->update( $values ) )
+        if ( !Resource::where( 'id', $id )->update( $values ) )
         {// (Unable to update the record)
             // Returning the value
             return false;
@@ -50,10 +50,10 @@ class Booking
         return $this->resource->create( $record );
     }
 
-    public function delete (int $customer_id, int $id) : bool
+    public function delete (int $id) : bool
     {
         // (Returning the value)
-        return $this->resource->where( [ [ 'customer_id', $customer_id ], [ 'id', $id ] ] )->delete();
+        return $this->resource->where( 'id', $id )->delete();
     }
 }
 

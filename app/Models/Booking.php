@@ -12,5 +12,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Booking extends Model
 {
-    
+    protected $fillable =
+    [
+        'customer_id',
+        'booking_timestamp',
+    ]
+    ;
 }

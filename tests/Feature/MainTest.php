@@ -33,6 +33,7 @@ class MainTest extends TestCase
         (
             '/api/bookings',
             [
+                'customer_id'       => mt_rand( 1, 10 ),
                 'booking_timestamp' => date( 'Y-m-d H:i:s', strtotime( '+ 3 month' ) )
             ],
             [
@@ -40,8 +41,45 @@ class MainTest extends TestCase
             ]
         )
         ;
-#echo json_encode( $response, JSON_PRETTY_PRINT );return;
+
         // (Checking for the status)
         $response->assertStatus(200);
+    }
+
+    public function test_client_insert_a_booking_without_token () : void
+    {
+        // (Sending the request)
+        $response = $this->postJson
+        (
+            '/api/bookings',
+            [
+                'customer_id'       => mt_rand( 1, 10 ),
+                'booking_timestamp' => date( 'Y-m-d H:i:s', strtotime( '+ 3 month' ) )
+            ]
+        )
+        ;
+
+        // (Checking for the status)
+        $response->assertStatus(400);
+    }
+
+    public function test_client_insert_a_booking_with_invalid_token () : void
+    {
+        // (Sending the request)
+        $response = $this->postJson
+        (
+            '/api/bookings',
+            [
+                'customer_id'       => mt_rand( 1, 10 ),
+                'booking_timestamp' => date( 'Y-m-d H:i:s', strtotime( '+ 3 month' ) )
+            ],
+            [
+                'Authorization' => 'Bearer ' . 'invalid_token',
+            ]
+        )
+        ;
+
+        // (Checking for the status)
+        $response->assertStatus(401);
     }
 }

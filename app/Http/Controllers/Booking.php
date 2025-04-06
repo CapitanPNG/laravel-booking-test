@@ -127,7 +127,8 @@ class Booking extends Controller
 
 
         // (Getting the value)
-        $response = $this->service->update( auth()->id, $id, [ 'booking_timestamp' => $input[ 'booking_timestamp' ] ] );
+        #$response = $this->service->update( /*auth()->id*/$input['customer_id'], $id, [ 'booking_timestamp' => $input['booking_timestamp'] ] );
+        $response = $this->service->update( $id, [ 'booking_timestamp' => $input['booking_timestamp'] ] );
 
         if ( $response->code !== 200 )
         {// (Operation failed)
@@ -185,8 +186,9 @@ class Booking extends Controller
         // (Getting the value)
         $record =
         [
-            'customer_id'       => auth()->id,
-            'booking_timestamp' => $input[ 'booking_timestamp' ],
+            #'customer_id'       => auth()->id,
+            'customer_id'       => $input['customer_id'],
+            'booking_timestamp' => $input['booking_timestamp'],
         ]
         ;
 
@@ -202,7 +204,7 @@ class Booking extends Controller
 
 
         // Returning the value
-        return response()->json( $response->data->id );
+        return response()->json( $response->data );
     }
 
     public function delete (int $id)
@@ -220,7 +222,8 @@ class Booking extends Controller
 
 
         // (Getting the value)
-        $response = $this->service->delete( auth()->id, $id );
+        #$response = $this->service->delete( auth()->id, $id );
+        $response = $this->service->delete( $id );
 
         if ( $response->code !== 200 )
         {// (Operation failed)

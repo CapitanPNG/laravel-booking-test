@@ -23,7 +23,8 @@ return new class extends Migration
             $table->timestamps();
             $table->timestamp('booking_timestamp');
 
-            $table->unique( ['customer_id', 'booking_timestamp'], 'customer_booking_unique' );
+            #$table->unique( ['customer_id', 'booking_timestamp'], 'customer_booking_unique' );
+            $table->unique( 'booking_timestamp' );
         });
     }
 
