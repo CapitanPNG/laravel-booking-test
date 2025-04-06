@@ -6,7 +6,7 @@ namespace App\Http\Controllers;
 
 
 
-#use Illuminate\Http\Request;
+use Illuminate\Http\Request;
 
 
 
@@ -14,6 +14,8 @@ use \App\Models\Booking as Resource;
 
 use \App\Http\Requests\BookingInsert as InsertRequest;
 use \App\Http\Requests\BookingUpdate as UpdateRequest;
+
+use Illuminate\Support\Facades\Log;
 
 
 
@@ -35,7 +37,7 @@ class Booking extends Controller
         return response()->json( $resource );
     }
 
-    public function list ()
+    public function list (Request $request)
     {
         // Returning the value
         return response()->json( Resource::all() );
@@ -71,6 +73,11 @@ class Booking extends Controller
             // Returning the value
             return response()->json( [ 'error' => 'Unable to update the record (' . __CLASS__ . ')' ], 500 );
         }
+
+
+
+        // (Pushing the message)
+        Log::info( __CLASS__ . ' ' . $id . ' has been updated :: ' . json_encode( $values ) );
 
 
 
@@ -127,6 +134,11 @@ class Booking extends Controller
 
 
 
+        // (Pushing the message)
+        Log::info( __CLASS__ . ' ' . $resource->id . ' has been inserted :: ' . json_encode( $record ) );
+
+
+
         // Returning the value
         return response()->json( $resource->id );
     }
@@ -138,6 +150,11 @@ class Booking extends Controller
             // Returning the value
             return response()->json( [ 'error' => 'Unable to delete the resource (' . __CLASS__ . ')' ], 500 );
         }
+
+
+
+        // (Pushing the message)
+        Log::info( __CLASS__ . ' ' . $id . ' has been deleted' );
 
 
 
