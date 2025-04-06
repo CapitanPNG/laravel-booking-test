@@ -41,7 +41,7 @@ class Booking extends Controller
         return response()->json( Resource::all() );
     }
 
-    public function update (int $id, UpdateRequest $request)
+    public function update (UpdateRequest $request, int $id)
     {
         // (Getting the value)
         $input = $request->validated();
