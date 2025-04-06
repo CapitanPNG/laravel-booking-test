@@ -14,10 +14,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ApiToken
 {
-    const API_TOKEN = 'ahcid';
-
-
-
     /**
      * Handle an incoming request.
      *
@@ -44,7 +40,7 @@ class ApiToken
             return response()->json( [ 'error' => "Authorization type '$auth_type' not supported" ], 400 );
         }
 
-        if ( !hash_equals( self::API_TOKEN, $auth_token ) )
+        if ( !hash_equals( env( 'API_TOKEN' ), $auth_token ) )
         {// Match failed
             // Returning the value
             return response()->json( [ 'error' => "Token '$auth_token' not valid" ], 401 );

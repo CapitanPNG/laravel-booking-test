@@ -7,15 +7,17 @@ use Illuminate\Support\Facades\Route;
 
 use \App\Http\Middleware\ApiToken as ApiTokenMiddleware;
 
+use \App\Http\Controllers\Booking as BookingController;
+
 
 
 // (Defining the route for testing sanctum)
-Route::get( '/api/user', function (Request $request) { return $request->user(); } )->middleware('auth:sanctum');
+Route::get( '/user', function (Request $request) { return $request->user(); } )->middleware('auth:sanctum');
 
 
 
 // (Defining the route for creating an API token)
-Route::get( '/api/token', function () { return ApiTokenMiddleware::API_TOKEN; } );
+Route::get( '/token', function () { return env( 'API_TOKEN' ); } );
 
 
 
@@ -29,11 +31,11 @@ Route::middleware
         function ()
         {
             // (Creating CRUD-FLUID routes for Booking Controller)
-            Route::get('/api/bookings/{id}', 'Booking@find');
-            Route::get('/api/bookings', 'Booking@list');
-            Route::put('/api/bookings/{id}', 'Booking@update');
-            Route::post('/api/bookings', 'Booking@insert');
-            Route::delete('/api/bookings/{id}', 'Booking@delete');
+            Route::get('/bookings/{id}', [ BookingController::class, 'find' ] );
+            Route::get('/bookings', [ BookingController::class, 'list' ] );
+            Route::put('/bookings/{id}', [ BookingController::class, 'update' ] );
+            Route::post('/bookings', [ BookingController::class, 'insert' ] );
+            Route::delete('/bookings/{id}', [ BookingController::class, 'delete' ] );
         }
 )
 ;

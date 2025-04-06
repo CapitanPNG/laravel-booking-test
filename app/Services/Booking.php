@@ -16,7 +16,7 @@ use \App\Response;
 
 class Booking
 {
-    protected $repository;
+    protected Repository $repository;
 
 
 
