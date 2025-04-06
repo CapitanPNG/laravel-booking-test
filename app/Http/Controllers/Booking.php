@@ -15,12 +15,24 @@ use \App\Models\Booking as Resource;
 use \App\Http\Requests\BookingInsert as InsertRequest;
 use \App\Http\Requests\BookingUpdate as UpdateRequest;
 
-use Illuminate\Support\Facades\Log;
+use \App\Services\Booking as Service;
 
 
 
 class Booking extends Controller
 {
+    protected Service $service;
+
+
+
+    public function __construct (Service $service)
+    {
+        // (Getting the value)
+        $this->service = $service;
+    }
+
+
+
     public function find (int $id)
     {
         // (Getting the value)
@@ -84,6 +96,8 @@ class Booking extends Controller
 
 
 
+        /* without service
+
         // (Getting the value)
         $customer_id = auth()->id;
 
@@ -108,10 +122,18 @@ class Booking extends Controller
             return response()->json( [ 'error' => 'Unable to update the record (' . __CLASS__ . ')' ], 500 );
         }
 
+        */
 
 
-        // (Pushing the message)
-        Log::info( __CLASS__ . ' ' . $id . ' has been updated :: ' . json_encode( $values ) );
+
+        // (Getting the value)
+        $response = $this->service->update( auth()->id, $id, [ 'booking_timestamp' => $input[ 'booking_timestamp' ] ] );
+
+        if ( $response->code !== 200 )
+        {// (Operation failed)
+            // Returning the value
+            return response()->json( [ 'error' => $response->message ], $response->code );
+        }
 
 
 
@@ -126,17 +148,7 @@ class Booking extends Controller
 
 
 
-        /*
-
-        if ( Resource::where( 'booking_timestamp', $input['booking_timestamp'] )->exists() )
-        {// (Record found)
-            // Returning the value
-            return response()->json( [ 'error' => "Fields ['booking_timestamp'] already exists (" . __CLASS__ . ')' ], 409 );
-        }
-
-        */
-
-
+        /* without service
 
         // (Getting the value)
         $customer_id = auth()->id;
@@ -166,29 +178,55 @@ class Booking extends Controller
             return response()->json( [ 'error' => 'Unable to insert the record (' . __CLASS__ . ')' ], 500 );
         }
 
+        */
 
 
-        // (Pushing the message)
-        Log::info( __CLASS__ . ' ' . $resource->id . ' has been inserted :: ' . json_encode( $record ) );
+
+        // (Getting the value)
+        $record =
+        [
+            'customer_id'       => auth()->id,
+            'booking_timestamp' => $input[ 'booking_timestamp' ],
+        ]
+        ;
+
+        // (Getting the value)
+        $response = $this->service->insert( $record );
+
+        if ( $response->code !== 200 )
+        {// (Operation failed)
+            // Returning the value
+            return response()->json( [ 'error' => $response->message ], $response->code );
+        }
 
 
 
         // Returning the value
-        return response()->json( $resource->id );
+        return response()->json( $response->data->id );
     }
 
     public function delete (int $id)
     {
+        /* without service
+
         if ( !Resource::where( [ [ 'customer_id', auth()->id ], [ 'id', $id ] ] )->delete() )
         {// (Unable to delete the resource)
             // Returning the value
             return response()->json( [ 'error' => 'Unable to delete the resource (' . __CLASS__ . ')' ], 500 );
         }
 
+        */
 
 
-        // (Pushing the message)
-        Log::info( __CLASS__ . ' ' . $id . ' has been deleted' );
+
+        // (Getting the value)
+        $response = $this->service->delete( auth()->id, $id );
+
+        if ( $response->code !== 200 )
+        {// (Operation failed)
+            // Returning the value
+            return response()->json( [ 'error' => $response->message ], $response->code );
+        }
 
 
 
